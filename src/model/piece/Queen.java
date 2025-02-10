@@ -7,9 +7,13 @@ import java.awt.*;
 public class Queen implements ChessPiece {
 
     private final boolean isWhite;
+    private int row;
+    private int col;
 
-    public Queen(boolean isWhite) {
+    public Queen(boolean isWhite, int row, int col) {
         this.isWhite = isWhite;
+        this.row = row;
+        this.col = col;
     }
 
     @Override

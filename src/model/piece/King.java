@@ -6,9 +6,14 @@ import java.awt.*;
 
 public class King implements ChessPiece {
     private final boolean isWhite;
+    private int row;
+    private int col;
+    private boolean hasMoved;
 
-    public King(boolean isWhite) {
+    public King(boolean isWhite, int row, int col) {
         this.isWhite = isWhite;
+        this.row = row;
+        this.col = col;
     }
 
     @Override
@@ -24,5 +29,9 @@ public class King implements ChessPiece {
     @Override
     public int getPointValue() {
         return 999;
+    }
+
+    public boolean isHasMoved() {
+        return hasMoved;
     }
 }

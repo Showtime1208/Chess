@@ -6,9 +6,14 @@ import model.board.Board;
 public class Rook implements ChessPiece {
 
   private final boolean isWhite;
+  private int row;
+  private int col;
+  private boolean hasMoved;
 
-  public Rook(boolean isWhite) {
+  public Rook(boolean isWhite, int row, int col) {
     this.isWhite = isWhite;
+    this.row = row;
+    this.col = col;
   }
   @Override
   public List getValidMoves(Board boardState) {
@@ -23,5 +28,9 @@ public class Rook implements ChessPiece {
   @Override
   public int getPointValue() {
     return 5;
+  }
+
+  public boolean isHasMoved() {
+    return hasMoved;
   }
 }
