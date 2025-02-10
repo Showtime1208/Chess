@@ -1,29 +1,19 @@
 package model.piece;
 
-public class ChessPiece implements Piece {
-    private ChessPieceVals vals;
-    private final boolean isWhite;
-    public ChessPiece(ChessPieceVals vals, boolean isWhite) {
-        if (vals == null) {
-            throw new IllegalArgumentException("Vals cannot be null.");
-        }
-        this.vals = vals;
-        this.isWhite = isWhite;
-    }
+import model.board.Board;
 
-    @Override
-    public String toString() {
-        if (isWhite) {
-            return "W" + vals.getNameString();
-        }
-        return  "B" + vals.getNameString();
-    }
+import java.awt.*;
 
-    @Override
-    public int getPointVals() {
-        return vals.getPointVal();
-    }
+/**
+ * Piece interface.
+ */
+public interface ChessPiece {
 
+    String toString();
 
+    List getValidMoves(Board boardState);
 
+    boolean isWhite();
+
+    int getPointValue();
 }

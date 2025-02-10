@@ -1,9 +1,10 @@
 package model.board;
 
-import model.piece.Piece;
+import model.piece.ChessPiece;
+
 
 public interface Board {
     String toString();
 
-    Piece[][] getBoard();
+    ChessPiece[][] getBoard();
 }
