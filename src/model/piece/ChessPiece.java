@@ -10,13 +10,13 @@ import java.awt.*;
  */
 public interface ChessPiece {
 
-    String toString();
+  String toString();
 
-    List<Point> getValidMoves(Board boardState);
+  List<Point> getValidMoves(Board boardState);
 
-    boolean isWhite();
+  boolean isWhite();
 
-    int getPointValue();
+  int getPointValue();
 
-    void setPosition(int row, int col);
+  void setPosition(int row, int col);
 }

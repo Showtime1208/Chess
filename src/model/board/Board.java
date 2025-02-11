@@ -4,9 +4,10 @@ import model.piece.ChessPiece;
 
 
 public interface Board {
-    String toString();
 
-    ChessPiece[][] getBoard();
+  String toString();
 
-    ChessPiece get(int row, int col);
+  ChessPiece[][] getBoard();
+
+  ChessPiece get(int row, int col);
 }
