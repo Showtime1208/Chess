@@ -7,4 +7,6 @@ public interface Board {
     String toString();
 
     ChessPiece[][] getBoard();
+
+    ChessPiece get(int row, int col);
 }

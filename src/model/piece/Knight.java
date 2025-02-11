@@ -1,5 +1,6 @@
 package model.piece;
 
+import java.util.List;
 import model.board.Board;
 
 import java.awt.*;
@@ -9,7 +10,7 @@ public class Knight implements ChessPiece{
     private int row;
     private int col;
     @Override
-    public List getValidMoves(Board boardState) {
+    public List<Point> getValidMoves(Board boardState) {
         return null;
     }
 
@@ -27,5 +28,11 @@ public class Knight implements ChessPiece{
     @Override
     public int getPointValue() {
         return 3;
+    }
+
+    @Override
+    public void setPosition(int row, int col) {
+        this.row = row;
+        this.col = col;
     }
 }

@@ -23,6 +23,12 @@ public class ChessBoard implements Board {
         this.board = new ChessPiece[8][8];
         initializeBoard();
     }
+
+    @Override
+    public ChessPiece get(int row, int col) {
+        return board[row][col];
+    }
+
     private void initializeBoard() {
         for (int i = 0; i < 8; i++) {
             this.board[1][i] = new Pawn(true, 1, i);

@@ -1,6 +1,7 @@
 package model.piece;
 
-import java.awt.List;
+import java.awt.Point;
+import java.util.List;
 import model.board.Board;
 
 public class Rook implements ChessPiece {
@@ -15,8 +16,14 @@ public class Rook implements ChessPiece {
     this.row = row;
     this.col = col;
   }
+
   @Override
-  public List getValidMoves(Board boardState) {
+  public void setPosition(int row, int col) {
+    this.row = row;
+    this.col = col;
+  }
+  @Override
+  public List<Point> getValidMoves(Board boardState) {
     return null;
   }
 

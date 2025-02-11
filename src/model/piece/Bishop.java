@@ -1,5 +1,6 @@
 package model.piece;
 
+import java.util.List;
 import model.board.Board;
 
 import java.awt.*;
@@ -17,7 +18,13 @@ public class Bishop implements ChessPiece {
   }
 
   @Override
-  public List getValidMoves(Board boardState) {
+  public void setPosition(int row, int col) {
+    this.row = row;
+    this.col = col;
+  }
+
+  @Override
+  public List<Point> getValidMoves(Board boardState) {
     return null;
   }
 
