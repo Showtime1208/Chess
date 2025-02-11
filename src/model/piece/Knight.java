@@ -1,5 +1,6 @@
 package model.piece;
 
+import java.util.ArrayList;
 import java.util.List;
 import model.board.Board;
 
@@ -13,8 +14,30 @@ public class Knight implements ChessPiece {
 
   @Override
   public List<Point> getValidMoves(Board boardState) {
-    return null;
+      List<Point> validMoves = new ArrayList<>();
+      int[][] offsets = {
+          { 2,  1},
+          { 2, -1},
+          {-2,  1},
+          {-2, -1},
+          { 1,  2},
+          { 1, -2},
+          {-1,  2},
+          {-1, -2}
+      };
+      for (int[] offset : offsets) {
+          int newRow = row + offset[0];
+          int newCol = col + offset[1];
+          if (isInBounds(newRow, newCol)) {
+              ChessPiece occupant = boardState.get(newRow, newCol);
+          }
+      }
+      return validMoves;
   }
+
+    private boolean isInBounds(int row, int col) {
+        return (row >= 0 && row <= 7) && (col >= 0 && col <= 7);
+    }
 
   public Knight(boolean isWhite, int row, int col) {
     this.isWhite = isWhite;

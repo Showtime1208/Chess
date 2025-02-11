@@ -1,5 +1,6 @@
 package model.piece;
 
+import java.util.ArrayList;
 import java.util.List;
 import model.board.Board;
 
@@ -25,7 +26,72 @@ public class Bishop implements ChessPiece {
 
   @Override
   public List<Point> getValidMoves(Board boardState) {
-    return null;
+    List<Point> validMoves = new ArrayList<>();
+    //down and right
+    for (int newRow = row + 1; newRow < 8; newRow++) {
+      for (int newCol = col + 1; newCol < 8; newCol++) {
+        if (!isInBounds(newRow, newCol)) break;
+        ChessPiece occupant = boardState.get(newRow, newCol);
+        if (occupant == null) {
+          validMoves.add(new Point(newRow, newCol));
+        } else {
+          if (occupant.isWhite() != this.isWhite) {
+            validMoves.add(new Point(newRow, newCol));
+          }
+          break;
+        }
+      }
+    }
+    //up and right
+    for (int newRow = row - 1; newRow >= 0; newRow--) {
+      for (int newCol = col + 1; newCol < 9; newCol++) {
+        if (!isInBounds(newRow, newCol)) break;
+        ChessPiece occupant = boardState.get(newRow, newCol);
+        if (occupant == null) {
+          validMoves.add(new Point(newRow, newCol));
+        } else {
+          if (occupant.isWhite() != this.isWhite) {
+            validMoves.add(new Point(newRow, newCol));
+          }
+          break;
+        }
+      }
+    }
+    //down and left
+    for (int newRow = row + 1; newRow < 8; newRow++) {
+      for (int newCol = col - 1; newCol >= 0; newCol--) {
+        if (!isInBounds(newRow, newCol)) break;
+        ChessPiece occupant = boardState.get(newRow, newCol);
+        if (occupant == null) {
+          validMoves.add(new Point(newRow, newCol));
+        } else {
+          if (occupant.isWhite() != this.isWhite) {
+            validMoves.add(new Point(newRow, newCol));
+          }
+          break;
+        }
+      }
+    }
+    //down and right
+    for (int newRow = row - 1; newRow >= 0; newRow--) {
+      for (int newCol = col - 1; newCol >= 0; newCol--) {
+        if (!isInBounds(newRow, newCol)) break;
+        ChessPiece occupant = boardState.get(newRow, newCol);
+        if (occupant == null) {
+          validMoves.add(new Point(newRow, newCol));
+        } else {
+          if (occupant.isWhite() != this.isWhite) {
+            validMoves.add(new Point(newRow, newCol));
+          }
+          break;
+        }
+      }
+    }
+    return validMoves;
+  }
+
+  private boolean isInBounds(int row, int col) {
+    return (row >= 0 && row <= 7) && (col >= 0 && col <= 7);
   }
 
   @Override
