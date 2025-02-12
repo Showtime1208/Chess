@@ -1,6 +1,8 @@
 package model.board;
 
 
+import java.awt.Point;
+import java.util.List;
 import model.piece.Bishop;
 import model.piece.ChessPiece;
 import model.piece.King;
@@ -14,6 +16,7 @@ import model.piece.Rook;
 public class ChessBoard implements Board {
 
   private ChessPiece[][] board;
+  private boolean whiteToMove;
 
   @Override
   public ChessPiece[][] getBoard() {
@@ -27,7 +30,48 @@ public class ChessBoard implements Board {
 
   @Override
   public ChessPiece get(int row, int col) {
-    return board[row][col];
+    if (isInBounds(row, col)) {
+      return board[row][col];
+    }
+    else throw new IllegalArgumentException("Out of bounds input.");
+  }
+
+  @Override
+  public void set(int row, int col, ChessPiece piece) {
+    if (isInBounds(row, col) && piece != null){
+      board[row][col] = piece;
+    } else throw new IllegalArgumentException("Out of bounds input.");
+  }
+
+  @Override
+  public void removePiece(int row, int col) {
+    if (isInBounds(row, col) && board[row][col] != null) {
+      board[row][col] = null;
+    } else throw new IllegalArgumentException("Out of bounds input.");
+  }
+
+  @Override
+  public void movePiece(int startRow, int startCol, int endRow, int endCol) {
+    if (!isInBounds(startRow, startCol) || !isInBounds(endRow, endCol)) {
+      throw new IllegalArgumentException("Out of bounds input.");
+    }
+    ChessPiece startPiece = get(startRow, startCol);
+    if (startPiece == null) {
+      throw new IllegalArgumentException("StartPiece is empty.");
+    }
+    List<Point> validMoves = startPiece.getValidMoves(this);
+    Point targetSquare = new Point(endRow, endCol);
+    if (!validMoves.contains(targetSquare)) {
+      throw new IllegalArgumentException("invalid move for selected piece.");
+    }
+    ChessPiece endPiece = board[endRow][endCol];
+
+    if (endPiece != null && endPiece.isWhite() == startPiece.isWhite()) {
+      throw new IllegalArgumentException("Cannot move to a square with your own piece on it.");
+    }
+    removePiece(endRow, endCol);
+    set(endRow, endCol, startPiece);
+    this.whiteToMove = !whiteToMove;
   }
 
   private void initializeBoard() {
@@ -52,6 +96,7 @@ public class ChessBoard implements Board {
     this.board[7][5] = new Bishop(false, 7, 5);
     this.board[7][3] = new Queen(false, 7, 3);
     this.board[7][4] = new King(false, 7, 4);
+    this.whiteToMove = true;
   }
 
   @Override
@@ -69,6 +114,11 @@ public class ChessBoard implements Board {
     }
     return builder.toString();
   }
+
+  private boolean isInBounds(int row, int col) {
+    return (row >= 0 && row <= 7) && (col >= 0 && col <= 7);
+  }
+
 
 
 
