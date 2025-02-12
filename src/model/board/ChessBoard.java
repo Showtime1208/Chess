@@ -70,4 +70,6 @@ public class ChessBoard implements Board {
     return builder.toString();
   }
 
+
+
 }
