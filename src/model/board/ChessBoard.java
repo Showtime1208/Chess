@@ -118,7 +118,7 @@ public class ChessBoard implements Board {
   private boolean isInBounds(int row, int col) {
     return (row >= 0 && row <= 7) && (col >= 0 && col <= 7);
   }
-
+//TODO: Need to figure out logic for check and castling
 
 
 

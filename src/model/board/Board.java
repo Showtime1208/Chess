@@ -16,4 +16,7 @@ public interface Board {
   void removePiece(int row, int col);
 
   void movePiece(int startRow, int startCol, int endRow, int endCol);
+
+
+
 }
