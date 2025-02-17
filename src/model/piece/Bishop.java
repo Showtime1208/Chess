@@ -5,6 +5,7 @@ import java.util.List;
 import model.board.Board;
 
 import java.awt.*;
+import model.board.ChessBoard;
 
 public class Bishop implements ChessPiece {
 
@@ -25,7 +26,7 @@ public class Bishop implements ChessPiece {
   }
 
   @Override
-  public List<Point> getValidMoves(Board boardState) {
+  public List<Point> getValidMoves(ChessBoard boardState) {
     List<Point> validMoves = new ArrayList<>();
     //down and right
     for (int newRow = row + 1; newRow < 8; newRow++) {

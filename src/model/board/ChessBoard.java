@@ -19,6 +19,8 @@ public class ChessBoard implements Board {
   private boolean whiteToMove;
   private List<ChessPiece> whitePieces;
   private List<ChessPiece> blackPieces;
+  private List<ChessPiece> blackGraveyard;
+  private List<ChessPiece> whiteGraveyard;
 
   @Override
   public ChessPiece[][] getBoard() {
@@ -46,8 +48,30 @@ public class ChessBoard implements Board {
   }
 
   @Override
+  public int[] getScore() {
+    int whiteScore = 0;
+    int blackScore = 0;
+    int[] intArray = new int[2];
+    for (ChessPiece piece : whiteGraveyard) {
+      whiteScore += piece.getPointValue();
+    }
+    intArray[0] = whiteScore;
+    for (ChessPiece piece : blackGraveyard) {
+      blackScore += piece.getPointValue();
+    }
+    intArray[1] = blackScore;
+    return intArray;
+  }
+
+  @Override
   public void removePiece(int row, int col) {
     if (isInBounds(row, col) && board[row][col] != null) {
+      boolean isWhite = board[row][col].isWhite();
+      if (isWhite) {
+        whiteGraveyard.add(board[row][col]);
+      } else {
+        blackGraveyard.add(board[row][col]);
+      }
       board[row][col] = null;
     } else throw new IllegalArgumentException("Out of bounds input.");
   }
@@ -138,13 +162,17 @@ public class ChessBoard implements Board {
     if (kingPosition == null) {
       throw new IllegalArgumentException("How?");
     }
+    return isUnderAttack(white, kingPosition);
+  }
+
+  public boolean isUnderAttack(boolean white, Point point) {
     boolean black = !white;
     for (int row = 0; row < 8; row++) {
       for (int col = 0; col < 8; col++) {
-        ChessPiece piece =  get(row, col);
+        ChessPiece piece = get(row, col);
         if (piece != null && piece.isWhite() == black) {
           List<Point> moves = piece.getValidMoves(this);
-          if (moves.contains(kingPosition)) {
+          if (moves.contains(point)) {
             return true;
           }
         }
@@ -189,6 +217,11 @@ public class ChessBoard implements Board {
     } else return blackPieces.getLast().getPosition();
   }
 
+  private void pawnPromotion(Pawn pawn, int endRow) {
+    boolean isWhite = pawn.isWhite();
+    //if (isWhite && end)
+  }
+
   @Override
   public ChessBoard makeCopy() {
     ChessBoard copy = new ChessBoard();
@@ -204,7 +237,7 @@ public class ChessBoard implements Board {
     }
     return copy;
   }
-//TODO: Need to figure out logic for castling
+//TODO: Need to figure out logic for pawn promotion.
 
 
 

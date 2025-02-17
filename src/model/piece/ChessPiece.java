@@ -4,6 +4,7 @@ import java.util.List;
 import model.board.Board;
 
 import java.awt.*;
+import model.board.ChessBoard;
 
 /**
  * Piece interface.
@@ -12,7 +13,7 @@ public interface ChessPiece {
 
   String toString();
 
-  List<Point> getValidMoves(Board boardState);
+  List<Point> getValidMoves(ChessBoard boardState);
 
   boolean isWhite();
 

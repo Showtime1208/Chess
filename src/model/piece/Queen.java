@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 import model.board.Board;
 
 import java.awt.*;
+import model.board.ChessBoard;
 
 public class Queen implements ChessPiece {
 
@@ -20,7 +21,7 @@ public class Queen implements ChessPiece {
   }
 
   @Override
-  public List<Point> getValidMoves(Board boardState) {
+  public List<Point> getValidMoves(ChessBoard boardState) {
     return Stream.concat(getValidBishopMoves(boardState).stream(), getValidRookMoves(boardState).stream()).toList();
   }
 
@@ -115,7 +116,7 @@ public class Queen implements ChessPiece {
       return validMoves;
   }
 
-  private List<Point> getValidRookMoves(Board boardState) {
+  private List<Point> getValidRookMoves(ChessBoard boardState) {
       List<Point> validMoves = new ArrayList<>();
       //Going up
       for (int newRow = row - 1; newRow >= 0 ; newRow--) {

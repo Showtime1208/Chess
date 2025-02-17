@@ -5,6 +5,7 @@ import java.util.List;
 import model.board.Board;
 
 import java.awt.*;
+import model.board.ChessBoard;
 
 public class King implements ChessPiece {
 
@@ -20,7 +21,7 @@ public class King implements ChessPiece {
   }
 
   @Override
-  public List<Point> getValidMoves(Board boardState) {
+  public List<Point> getValidMoves(ChessBoard boardState) {
     List<Point> validMoves = new ArrayList<>();
     for (int nRow = -1; nRow <= 1; nRow++) {
       for (int nCol = -1; nCol <= 1; nCol++) {
@@ -32,12 +33,53 @@ public class King implements ChessPiece {
         if (isInBounds(newRow, newCol)) {
           ChessPiece squareOccupant = boardState.get(newRow, newCol);
           if (squareOccupant == null || squareOccupant.isWhite() != this.isWhite) {
-            validMoves.add(new Point(row, col));
+            validMoves.add(new Point(newRow, newCol));
           }
         }
       }
     }
+    addCastlingMoves(boardState, validMoves);
     return validMoves;
+  }
+
+  private void addCastlingMoves(ChessBoard boardState, List<Point> validMoves) {
+    if (!this.hasMoved) {
+      // === KING-SIDE ===
+      ChessPiece rightRook = boardState.get(row, 7);
+      if (rightRook instanceof Rook) {
+        Rook rook = (Rook) rightRook;
+        if (rook.isWhite() == this.isWhite && !rook.isHasMoved()) {
+          if (boardState.get(row, 5) == null && boardState.get(row, 6) == null) {
+            boolean kingSquareSafe  = !boardState.isUnderAttack(this.isWhite, new Point(row, col));
+            boolean passSquare5Safe = !boardState.isUnderAttack(this.isWhite, new Point(row, 5));
+            boolean passSquare6Safe = !boardState.isUnderAttack(this.isWhite, new Point(row, 6));
+            if (kingSquareSafe && passSquare5Safe && passSquare6Safe) {
+              validMoves.add(new Point(row, col + 2));
+            }
+          }
+        }
+      }
+
+      // === QUEEN-SIDE ===
+      ChessPiece leftRook = boardState.get(row, 0);
+      if (leftRook instanceof Rook) {
+        Rook rook = (Rook) leftRook;
+        if (rook.isWhite() == this.isWhite && !rook.isHasMoved()) {
+          if (boardState.get(row, 1) == null
+              && boardState.get(row, 2) == null
+              && boardState.get(row, 3) == null) {
+
+            boolean kingSquareSafe  = !boardState.isUnderAttack(this.isWhite, new Point(row, col));
+            boolean passSquare1Safe = !boardState.isUnderAttack(this.isWhite, new Point(row, 1));
+            boolean passSquare2Safe = !boardState.isUnderAttack(this.isWhite, new Point(row, 2));
+            boolean passSquare3Safe = !boardState.isUnderAttack(this.isWhite, new Point(row, 3));
+            if (kingSquareSafe && passSquare1Safe && passSquare2Safe && passSquare3Safe) {
+              validMoves.add(new Point(row, col - 2));
+            }
+          }
+        }
+      }
+    }
   }
 
   private boolean isInBounds(int row, int col) {

@@ -3,6 +3,7 @@ package model.board;
 import model.piece.ChessPiece;
 
 
+
 public interface Board {
 
   String toString();
@@ -16,6 +17,8 @@ public interface Board {
   void removePiece(int row, int col);
 
   void movePiece(int startRow, int startCol, int endRow, int endCol);
+
+  int[] getScore();
 
 
   Board makeCopy();

@@ -4,6 +4,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import model.board.Board;
+import model.board.ChessBoard;
 
 public class Rook implements ChessPiece {
 
@@ -25,7 +26,7 @@ public class Rook implements ChessPiece {
   }
 
   @Override
-  public List<Point> getValidMoves(Board boardState) {
+  public List<Point> getValidMoves(ChessBoard boardState) {
     List<Point> validMoves = new ArrayList<>();
     //Going up
     for (int newRow = row - 1; newRow >= 0 ; newRow--) {

@@ -5,6 +5,7 @@ import java.util.List;
 import model.board.Board;
 
 import java.awt.*;
+import model.board.ChessBoard;
 
 public class Pawn implements ChessPiece {
 
@@ -28,7 +29,7 @@ public class Pawn implements ChessPiece {
 
 
   @Override
-  public List<Point> getValidMoves(Board boardState) {
+  public List<Point> getValidMoves(ChessBoard boardState) {
     List<Point> validMoves = new ArrayList<>();
     int direction = isWhite ? 1 : -1;
     int oneStepRow = row + direction;

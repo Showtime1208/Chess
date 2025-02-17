@@ -5,6 +5,7 @@ import java.util.List;
 import model.board.Board;
 
 import java.awt.*;
+import model.board.ChessBoard;
 
 public class Knight implements ChessPiece {
 
@@ -13,7 +14,7 @@ public class Knight implements ChessPiece {
   private int col;
 
   @Override
-  public List<Point> getValidMoves(Board boardState) {
+  public List<Point> getValidMoves(ChessBoard boardState) {
       List<Point> validMoves = new ArrayList<>();
       int[][] offsets = {
           { 2,  1},
