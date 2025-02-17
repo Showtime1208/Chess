@@ -90,6 +90,16 @@ public class Bishop implements ChessPiece {
     return validMoves;
   }
 
+  @Override
+  public Point getPosition() {
+    return new Point(this.row, this.col);
+  }
+
+  @Override
+  public ChessPiece clone() {
+    return new Bishop(isWhite, row, col);
+  }
+
   private boolean isInBounds(int row, int col) {
     return (row >= 0 && row <= 7) && (col >= 0 && col <= 7);
   }

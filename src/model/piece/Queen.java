@@ -41,6 +41,11 @@ public class Queen implements ChessPiece {
   }
 
   @Override
+  public Point getPosition() {
+    return new Point(this.row, this.col);
+  }
+
+  @Override
   public int getPointValue() {
     return 9;
   }
@@ -165,5 +170,10 @@ public class Queen implements ChessPiece {
           }
       }
       return validMoves;
+  }
+
+  @Override
+  public ChessPiece clone() {
+    return new Queen(isWhite, row, col);
   }
 }

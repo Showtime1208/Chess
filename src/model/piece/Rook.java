@@ -99,4 +99,16 @@ public class Rook implements ChessPiece {
   public boolean isHasMoved() {
     return hasMoved;
   }
+
+  @Override
+  public Point getPosition() {
+    return new Point(this.row, this.col);
+  }
+
+  @Override
+  public ChessPiece clone() {
+    Rook rook = new Rook(isWhite, row, col);
+    rook.hasMoved = this.hasMoved;
+    return rook;
+  }
 }

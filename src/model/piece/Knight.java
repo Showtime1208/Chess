@@ -60,4 +60,14 @@ public class Knight implements ChessPiece {
     this.row = row;
     this.col = col;
   }
+
+  @Override
+  public Point getPosition() {
+    return new Point(this.row, this.col);
+  }
+
+  @Override
+  public ChessPiece clone() {
+    return new Knight(this.isWhite, this.row, this.col);
+  }
 }

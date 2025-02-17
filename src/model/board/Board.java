@@ -18,5 +18,5 @@ public interface Board {
   void movePiece(int startRow, int startCol, int endRow, int endCol);
 
 
-
+  Board makeCopy();
 }

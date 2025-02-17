@@ -60,6 +60,18 @@ public class King implements ChessPiece {
     return 999;
   }
 
+  @Override
+  public Point getPosition() {
+    return new Point(this.row, this.col);
+  }
+
+  @Override
+  public ChessPiece clone() {
+    King king = new King(isWhite, row, col);
+    king.hasMoved = this.hasMoved;
+    return king;
+  }
+
   public boolean isHasMoved() {
     return hasMoved;
   }

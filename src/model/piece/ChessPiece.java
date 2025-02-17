@@ -19,4 +19,8 @@ public interface ChessPiece {
   int getPointValue();
 
   void setPosition(int row, int col);
+
+  Point getPosition();
+
+  ChessPiece clone();
 }

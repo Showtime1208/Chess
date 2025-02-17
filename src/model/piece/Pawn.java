@@ -98,6 +98,19 @@ public class Pawn implements ChessPiece {
     return 1;
   }
 
+  @Override
+  public Point getPosition() {
+    return new Point(this.row, this.col);
+  }
+
+  @Override
+  public ChessPiece clone() {
+    Pawn pawn = new Pawn(isWhite, row, col);
+    pawn.hasMoved = this.hasMoved;
+    pawn.hasMovedOnce = this.hasMovedOnce;
+    return pawn;
+  }
+
   public boolean isHasMoved() {
     return hasMoved;
   }
