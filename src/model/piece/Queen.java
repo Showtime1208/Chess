@@ -2,6 +2,7 @@ package model.piece;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import model.board.Board;
 
@@ -22,7 +23,8 @@ public class Queen implements ChessPiece {
 
   @Override
   public List<Point> getValidMoves(ChessBoard boardState) {
-    return Stream.concat(getValidBishopMoves(boardState).stream(), getValidRookMoves(boardState).stream()).toList();
+    return Stream.concat(getValidBishopMoves(boardState).stream(),
+        getValidRookMoves(boardState).stream()).collect(Collectors.toList());
   }
 
   private boolean isInBounds(int row, int col) {

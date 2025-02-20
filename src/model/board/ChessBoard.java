@@ -213,8 +213,8 @@ public class ChessBoard implements Board {
 
   private Point findKing(boolean isWhite) {
     if (isWhite) {
-      return whitePieces.getLast().getPosition();
-    } else return blackPieces.getLast().getPosition();
+      return whitePieces.get(whitePieces.size()-1).getPosition();
+    } else return blackPieces.get(blackPieces.size()-1).getPosition();
   }
 
   private void pawnPromotion(Pawn pawn, int endRow) {
