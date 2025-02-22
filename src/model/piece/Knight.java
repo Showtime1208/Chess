@@ -31,6 +31,9 @@ public class Knight implements ChessPiece {
           int newCol = col + offset[1];
           if (isInBounds(newRow, newCol)) {
               ChessPiece occupant = boardState.get(newRow, newCol);
+            if (occupant == null || occupant.isWhite() != this.isWhite) {
+              validMoves.add(new Point(newRow, newCol));
+            }
           }
       }
       return validMoves;
