@@ -85,6 +85,9 @@ public class ChessBoard implements Board {
     if (startPiece == null) {
       throw new IllegalArgumentException("StartPiece is empty.");
     }
+    if (startPiece.isWhite() != whiteToMove) {
+      throw new IllegalStateException("Initial piece must be your color.");
+    }
     List<Point> validMoves = startPiece.getValidMoves(this);
     Point targetSquare = new Point(endRow, endCol);
     if (!validMoves.contains(targetSquare)) {
@@ -93,7 +96,7 @@ public class ChessBoard implements Board {
     ChessPiece endPiece = board[endRow][endCol];
 
     if (endPiece != null && endPiece.isWhite() == startPiece.isWhite()) {
-      throw new IllegalArgumentException("Cannot move to a square with your own piece on it.");
+      throw new IllegalStateException("Cannot move to a square with your own piece on it.");
     }
     removePiece(endRow, endCol);
     set(endRow, endCol, startPiece);
@@ -236,6 +239,10 @@ public class ChessBoard implements Board {
       }
     }
     return copy;
+  }
+
+  public boolean getTurn() {
+    return whiteToMove;
   }
 //TODO: Need to figure out logic for pawn promotion.
 

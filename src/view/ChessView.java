@@ -11,4 +11,16 @@ public class ChessView {
     }
   }
 
+  public String displayBoard() {
+    return "";
+  }
+
+  public String displayWhiteGraveyard() {
+    return "";
+  }
+
+  public String displayBlackGraveyard() {
+    return "";
+  }
+
 }
