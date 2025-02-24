@@ -15,7 +15,13 @@ import model.piece.Rook;
 
 public class ChessBoard implements Board {
 
+  /*
+   * Thoughts for chessboard. Change the initializeBoard to be just like the startGame in the pokerPolygons, where I have a gameStart condition I gotta do before I start everyhting.
+   *  Would make the controller stuff a lot easier.
+   */
+
   private ChessPiece[][] board;
+  private boolean gameStart;
   private boolean whiteToMove;
   private List<ChessPiece> whitePieces;
   private List<ChessPiece> blackPieces;
@@ -29,11 +35,14 @@ public class ChessBoard implements Board {
 
   public ChessBoard() {
     this.board = new ChessPiece[8][8];
-    initializeBoard();
+    this.gameStart = false;
   }
 
   @Override
   public ChessPiece get(int row, int col) {
+    if (!gameStart) {
+      throw new IllegalStateException("Game has not started.");
+    }
     if (isInBounds(row, col)) {
       return board[row][col];
     }
@@ -42,6 +51,9 @@ public class ChessBoard implements Board {
 
   @Override
   public void set(int row, int col, ChessPiece piece) {
+    if (!gameStart) {
+      throw new IllegalStateException("Game has not started yet.");
+    }
     if (isInBounds(row, col) && piece != null){
       board[row][col] = piece;
     } else throw new IllegalArgumentException("Out of bounds input.");
@@ -49,6 +61,9 @@ public class ChessBoard implements Board {
 
   @Override
   public int[] getScore() {
+    if (!gameStart) {
+      throw new IllegalStateException("Game has not started.");
+    }
     int whiteScore = 0;
     int blackScore = 0;
     int[] intArray = new int[2];
@@ -65,6 +80,9 @@ public class ChessBoard implements Board {
 
   @Override
   public void removePiece(int row, int col) {
+    if (!gameStart) {
+      throw new IllegalStateException("Game has not started.");
+    }
     if (isInBounds(row, col) && board[row][col] != null) {
       boolean isWhite = board[row][col].isWhite();
       if (isWhite) {
@@ -78,6 +96,9 @@ public class ChessBoard implements Board {
 
   @Override
   public void movePiece(int startRow, int startCol, int endRow, int endCol) {
+    if (!gameStart) {
+      throw new IllegalStateException("Game has not started.");
+    }
     if (!isInBounds(startRow, startCol) || !isInBounds(endRow, endCol)) {
       throw new IllegalArgumentException("Out of bounds input.");
     }
@@ -103,7 +124,7 @@ public class ChessBoard implements Board {
     this.whiteToMove = !whiteToMove;
   }
 
-  private void initializeBoard() {
+  public void startGame() {
     for (int i = 0; i < 8; i++) {
       this.board[1][i] = new Pawn(true, 1, i);
       whitePieces.add(this.board[1][i]);
@@ -142,6 +163,7 @@ public class ChessBoard implements Board {
     this.board[7][4] = new King(false, 7, 4);
     blackPieces.add(this.board[7][4]);
     this.whiteToMove = true;
+    this.gameStart = true;
   }
 
   @Override
@@ -227,6 +249,9 @@ public class ChessBoard implements Board {
 
   @Override
   public ChessBoard makeCopy() {
+    if (!gameStart) {
+      throw new IllegalStateException("Game has not started.");
+    }
     ChessBoard copy = new ChessBoard();
     for (int row = 0; row < 8; row++) {
       for (int col = 0; col < 8; col++) {
@@ -242,6 +267,9 @@ public class ChessBoard implements Board {
   }
 
   public boolean getTurn() {
+    if (!gameStart) {
+      throw new IllegalStateException("Game has not started.");
+    }
     return whiteToMove;
   }
 //TODO: Need to figure out logic for pawn promotion.

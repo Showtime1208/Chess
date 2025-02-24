@@ -21,8 +21,12 @@ public class Bishop implements ChessPiece {
 
   @Override
   public void setPosition(int row, int col) {
-    this.row = row;
-    this.col = col;
+    if (isInBounds(row, col)) {
+      this.row = row;
+      this.col = col;
+    } else {
+      throw new IllegalArgumentException("Out of bounds for setPosition.");
+    }
   }
 
   @Override

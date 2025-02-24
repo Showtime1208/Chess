@@ -29,10 +29,31 @@ public class ChessController {
     }
     this.board = board;
     this.view = view;
+    board.startGame();
+    try {
+      while (!board.isCheckMate(board.getTurn()) && gameQuit) {
+        printBoard();
+        printWhiteScore();
+        printBlackScore();
+        printTurn();
+        handleUserInput();
+      }
+      if (gameQuit) {
+        printGameQuitMessage();
+      } else {
+        printGameOverMessage();
+      }
+    } catch (IOException ex) {
+      throw new IllegalStateException("IOException shawty.");
+    }
   }
 
   private void printBoard() throws IOException {
     transmit(view.displayBoard());
+  }
+
+  private void printGameOverMessage() throws IOException {
+
   }
 
   private void printTurn() throws IOException {
@@ -43,7 +64,21 @@ public class ChessController {
     }
   }
   private void handleUserInput() throws IOException {
-
+    if (!scan.hasNext()) {
+      throw new IllegalStateException("No more input when expecting a move.");
+    }
+    String input = scan.next();
+    if (input.equalsIgnoreCase("move")) {
+      int index1 = getNextInt() - 1;
+      int index2 = getNextInt() - 1;
+      int index3 = getNextInt() - 1;
+      int index4 = getNextInt() - 1;
+      try {
+        board.movePiece(index1, index2, index3, index4);
+      } catch (IllegalArgumentException | IllegalStateException ex) {
+        throw new IllegalStateException("Could not move." + ex.getLocalizedMessage());
+      }
+    }
   }
   private void printWhiteGraveyard() throws IOException {
     transmit(view.displayWhiteGraveyard());
@@ -68,6 +103,26 @@ public class ChessController {
   }
   private void printBlackScore() throws IOException {
     transmit(board.getScore()[1] + "");
+  }
+
+  private int getNextInt() {
+    while (scan.hasNext()) {
+      String token = scan.next();
+      if (token.equalsIgnoreCase("q")) {
+        this.gameQuit = true;
+        return -999;
+      }
+      try {
+        int val = Integer.parseInt(token);
+        if (val < 0) {
+          throw new NumberFormatException();
+        }
+        return val;
+      } catch (NumberFormatException ex) {
+        return getNextInt();
+      }
+    }
+    throw new IllegalStateException("No more input when expecting an integer.");
   }
 
 
