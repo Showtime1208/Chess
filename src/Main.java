@@ -1,4 +1,4 @@
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 import model.board.ChessBoard;
 import view.ChessBoardFrame;
 
@@ -8,10 +8,12 @@ public class Main {
 
   public static void main(String[] args) {
     ChessBoard board = new ChessBoard();
+    board.startGame();
     SwingUtilities.invokeLater(() -> {
       ChessBoardFrame frame = new ChessBoardFrame(board);
-      frame.setVisible(true);
       frame.updateBoard();
+      frame.setVisible(true);
+
     });
 
   }

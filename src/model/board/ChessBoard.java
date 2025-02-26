@@ -2,6 +2,7 @@ package model.board;
 
 
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.List;
 import model.piece.Bishop;
 import model.piece.ChessPiece;
@@ -36,6 +37,10 @@ public class ChessBoard implements Board {
   public ChessBoard() {
     this.board = new ChessPiece[8][8];
     this.gameStart = false;
+    this.whitePieces = new ArrayList<>();
+    this.blackPieces = new ArrayList<>();
+    this.blackGraveyard = new ArrayList<>();
+    this.whiteGraveyard = new ArrayList<>();
   }
 
   @Override
