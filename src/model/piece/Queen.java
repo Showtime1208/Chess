@@ -44,7 +44,7 @@ public class Queen implements ChessPiece {
   public ImageIcon getIcon() {
     String string = isWhite ? "white" : "black";
     return new ImageIcon("pieceImages" + File.separator
-        + string + File.separator +  "Queen.png");
+        + string + "Queen.png");
 
   }
 

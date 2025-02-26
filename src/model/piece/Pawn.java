@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
-import model.board.Board;
 
 import java.awt.*;
 import model.board.ChessBoard;
@@ -118,7 +117,7 @@ public class Pawn implements ChessPiece {
   public ImageIcon getIcon() {
     String string = isWhite ? "white" : "black";
     return new ImageIcon("pieceImages" + File.separator
-        + string + File.separator +  "Pawn.png");
+        + string + "Pawn.png");
   }
 
   public boolean isHasMoved() {

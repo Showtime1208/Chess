@@ -25,7 +25,7 @@ public class King implements ChessPiece {
   public ImageIcon getIcon() {
     String string = isWhite ? "white" : "black";
     return new ImageIcon("pieceImages" + File.separator
-        + string + File.separator +  "King.png");
+        + string + "King.png");
 
   }
 

@@ -5,7 +5,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.ImageIcon;
-import model.board.Board;
 import model.board.ChessBoard;
 
 public class Rook implements ChessPiece {
@@ -31,7 +30,7 @@ public class Rook implements ChessPiece {
   public ImageIcon getIcon() {
     String string = isWhite ? "white" : "black";
     return new ImageIcon("pieceImages" + File.separator
-        + string + File.separator +  "Rook.png");
+        + string + "Rook.png");
 
   }
 

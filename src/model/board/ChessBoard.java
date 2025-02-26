@@ -146,6 +146,8 @@ public class ChessBoard implements Board {
     whitePieces.add(this.board[0][7]);
     this.board[0][1] = new Knight(true, 0, 1);
     whitePieces.add(this.board[0][1]);
+    this.board[0][6] = new Knight(true, 0, 6);
+    whitePieces.add(this.board[0][6]);
     this.board[0][2] = new Bishop(true, 0, 2);
     whitePieces.add(this.board[0][2]);
     this.board[0][5] = new Bishop(true, 0, 5);

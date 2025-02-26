@@ -3,8 +3,7 @@ import model.board.ChessBoard;
 import model.piece.Bishop;
 import view.ChessBoardFrame;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+
 public class Main {
 
   public static void main(String[] args) {
@@ -15,10 +14,6 @@ public class Main {
       ChessBoardFrame frame = new ChessBoardFrame(board);
       frame.updateBoard();
       frame.setVisible(true);
-      Icon icon = new Bishop(true, 0, 0).getIcon();
-      JLabel label = new JLabel(icon);
-      new JLabel(icon).setVisible(true);
-
     });
 
   }
