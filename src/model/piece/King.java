@@ -2,7 +2,6 @@ package model.piece;
 
 import java.util.ArrayList;
 import java.util.List;
-import model.board.Board;
 
 import java.awt.*;
 import model.board.ChessBoard;

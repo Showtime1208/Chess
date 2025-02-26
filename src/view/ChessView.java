@@ -1,6 +1,8 @@
 package view;
 
 import model.board.ChessBoard;
+import javax.swing.*;
+import java.awt.*;
 
 public class ChessView {
   private ChessBoard board;
