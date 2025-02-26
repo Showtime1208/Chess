@@ -1,7 +1,9 @@
 package model.piece;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.ImageIcon;
 import model.board.Board;
 
 import java.awt.*;
@@ -12,6 +14,13 @@ public class Knight implements ChessPiece {
   private final boolean isWhite;
   private int row;
   private int col;
+
+  @Override
+  public ImageIcon getIcon() {
+    String string = isWhite ? "white" : "black";
+    return new ImageIcon("pieceImages" + File.separator
+        + string + File.separator +  "Knight.png");
+  }
 
   @Override
   public List<Point> getValidMoves(ChessBoard boardState) {

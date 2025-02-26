@@ -1,6 +1,7 @@
 package model.piece;
 
 import java.util.List;
+import javax.swing.ImageIcon;
 import model.board.Board;
 
 import java.awt.*;
@@ -10,6 +11,8 @@ import model.board.ChessBoard;
  * Piece interface.
  */
 public interface ChessPiece {
+
+  ImageIcon getIcon();
 
   String toString();
 

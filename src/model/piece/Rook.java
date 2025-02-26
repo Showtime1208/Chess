@@ -1,8 +1,10 @@
 package model.piece;
 
 import java.awt.Point;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.ImageIcon;
 import model.board.Board;
 import model.board.ChessBoard;
 
@@ -23,6 +25,14 @@ public class Rook implements ChessPiece {
   public void setPosition(int row, int col) {
     this.row = row;
     this.col = col;
+  }
+
+  @Override
+  public ImageIcon getIcon() {
+    String string = isWhite ? "white" : "black";
+    return new ImageIcon("pieceImages" + File.separator
+        + string + File.separator +  "Rook.png");
+
   }
 
   @Override

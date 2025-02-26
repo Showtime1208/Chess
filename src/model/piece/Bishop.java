@@ -1,7 +1,9 @@
 package model.piece;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.ImageIcon;
 import model.board.Board;
 
 import java.awt.*;
@@ -17,6 +19,14 @@ public class Bishop implements ChessPiece {
     this.isWhite = isWhite;
     this.row = row;
     this.col = col;
+  }
+
+  @Override
+  public ImageIcon getIcon() {
+    String string = isWhite ? "white" : "black";
+    return new ImageIcon("pieceImages" + File.separator
+        + string + File.separator +  "Bishop.png");
+
   }
 
   @Override

@@ -1,7 +1,9 @@
 package model.piece;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.ImageIcon;
 import model.board.Board;
 
 import java.awt.*;
@@ -110,6 +112,13 @@ public class Pawn implements ChessPiece {
     pawn.hasMoved = this.hasMoved;
     pawn.hasMovedOnce = this.hasMovedOnce;
     return pawn;
+  }
+
+  @Override
+  public ImageIcon getIcon() {
+    String string = isWhite ? "white" : "black";
+    return new ImageIcon("pieceImages" + File.separator
+        + string + File.separator +  "Pawn.png");
   }
 
   public boolean isHasMoved() {

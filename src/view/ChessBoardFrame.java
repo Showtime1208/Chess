@@ -37,7 +37,7 @@ public class ChessBoardFrame extends JFrame {
         JPanel square = panel[row][col];
         ChessPiece piece = model.get(row, col);
         if (piece != null) {
-          JLabel pieceLabel = new JLabel(piece.toString());
+          JLabel pieceLabel = new JLabel(piece.getIcon());
           square.add(pieceLabel);
         }
         square.revalidate();
