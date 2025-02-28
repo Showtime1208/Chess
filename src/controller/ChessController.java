@@ -1,128 +1,68 @@
 package controller;
 
+import java.awt.Point;
 import java.io.IOError;
 import java.io.IOException;
+import java.util.List;
 import java.util.Scanner;
 import model.board.ChessBoard;
+import model.piece.ChessPiece;
+import view.ChessBoardFrame;
 import view.ChessView;
 
 public class ChessController {
   private ChessBoard board;
-  private ChessView view;
-
-  private Scanner scan;
-  private Appendable out;
-  private boolean gameQuit;
-
-  public ChessController(Readable rd, Appendable ap) throws IllegalArgumentException {
-    if (rd == null || ap == null) {
-      throw new IllegalArgumentException("rd/ap cannot be null");
-    }
-    this.scan = new Scanner(rd);
-    this.out = ap;
-    this.gameQuit = false;
-  }
-
-  public void playGame(ChessBoard board, ChessView view) {
-    if (board == null || view == null) {
-      throw new IllegalArgumentException("Model/view cannot be null");
+  private ChessBoardFrame view;
+  private boolean pieceSelected;
+  private int selectedRow;
+  private int selectedCol;
+  public ChessController(ChessBoard board, ChessBoardFrame view) {
+    if  (board == null ||  view == null) {
+      throw new IllegalArgumentException("Board  or View is null");
     }
     this.board = board;
     this.view = view;
+    this.selectedRow = -1;
+    this.selectedCol = -1;
+  }
+
+  public void playGame() {
     board.startGame();
-    try {
-      while (!board.isCheckMate(board.getTurn()) && gameQuit) {
-        printBoard();
-        printWhiteScore();
-        printBlackScore();
-        printTurn();
-        handleUserInput();
-      }
-      if (gameQuit) {
-        printGameQuitMessage();
-      } else {
-        printGameOverMessage();
-      }
-    } catch (IOException ex) {
-      throw new IllegalStateException("IOException shawty.");
-    }
-  }
-
-  private void printBoard() throws IOException {
-    transmit(view.displayBoard());
-  }
-
-  private void printGameOverMessage() throws IOException {
+    view.updateBoard();
 
   }
 
-  private void printTurn() throws IOException {
-    if (board.getTurn()) {
-      transmit("White");
-    } else {
-      transmit("Black");
-    }
-  }
-  private void handleUserInput() throws IOException {
-    if (!scan.hasNext()) {
-      throw new IllegalStateException("No more input when expecting a move.");
-    }
-    String input = scan.next();
-    if (input.equalsIgnoreCase("move")) {
-      int index1 = getNextInt() - 1;
-      int index2 = getNextInt() - 1;
-      int index3 = getNextInt() - 1;
-      int index4 = getNextInt() - 1;
+  public void handleSquareClick(int row, int col) {
+    if (!pieceSelected) {
+      ChessPiece piece = null;
       try {
-        board.movePiece(index1, index2, index3, index4);
-      } catch (IllegalArgumentException | IllegalStateException ex) {
-        throw new IllegalStateException("Could not move." + ex.getLocalizedMessage());
+        piece = board.get(row, col);
+      } catch (IllegalArgumentException | IllegalStateException e) {
+        throw new IllegalArgumentException("How");
       }
+      if (piece == null) {
+        return;
+      }
+      if (piece.isWhite() != board.getTurn()) {
+        return;
+      }
+      pieceSelected = true;
+      selectedRow = row;
+      selectedCol = col;
+      List<Point> moves = piece.getValidMoves(board);
+      view.highlightMoves(moves);
     }
-  }
-  private void printWhiteGraveyard() throws IOException {
-    transmit(view.displayWhiteGraveyard());
-  }
-  private void printBlackGraveyard() throws IOException {
-    transmit(view.displayBlackGraveyard());
-  }
-  private void printGameQuitMessage() throws IOException {
-    printBoard();
-    transmit("Game Quit:");
-    printWhiteGraveyard();
-    printWhiteScore();
-    printBlackGraveyard();
-    printBlackScore();
-  }
-  private void transmit(String message) throws IOException {
-    out.append(message).append("\n");
-  }
-
-  private void printWhiteScore() throws IOException {
-    transmit(board.getScore()[0] + "");
-  }
-  private void printBlackScore() throws IOException {
-    transmit(board.getScore()[1] + "");
-  }
-
-  private int getNextInt() {
-    while (scan.hasNext()) {
-      String token = scan.next();
-      if (token.equalsIgnoreCase("q")) {
-        this.gameQuit = true;
-        return -999;
-      }
+    else {
       try {
-        int val = Integer.parseInt(token);
-        if (val < 0) {
-          throw new NumberFormatException();
-        }
-        return val;
-      } catch (NumberFormatException ex) {
-        return getNextInt();
+        board.movePiece(selectedRow, selectedCol, row, col);
+      } catch (IllegalArgumentException | IllegalStateException e) {
+        return;
       }
+      pieceSelected = false;
+      selectedRow = -1;
+      selectedCol = -1;
+      view.updateBoard();
     }
-    throw new IllegalStateException("No more input when expecting an integer.");
   }
 
 

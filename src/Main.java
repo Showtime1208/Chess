@@ -1,3 +1,4 @@
+import controller.ChessController;
 import javax.swing.*;
 import model.board.ChessBoard;
 import model.piece.Bishop;
@@ -8,10 +9,11 @@ public class Main {
 
   public static void main(String[] args) {
     ChessBoard board = new ChessBoard();
+    ChessBoardFrame frame = new ChessBoardFrame(board, null);
+    ChessController controller = new  ChessController(board, frame);
+    frame.addController(controller);
     board.startGame();
-    board.movePiece(1, 0, 2, 0);
     SwingUtilities.invokeLater(() -> {
-      ChessBoardFrame frame = new ChessBoardFrame(board);
       frame.updateBoard();
       frame.setVisible(true);
     });
