@@ -152,10 +152,10 @@ public class ChessBoard implements Board {
     whitePieces.add(this.board[0][2]);
     this.board[0][5] = new Bishop(true, 0, 5);
     whitePieces.add(this.board[0][5]);
-    this.board[0][3] = new Queen(true, 0, 3);
-    whitePieces.add(this.board[0][3]);
-    this.board[0][4] = new King(true, 0, 4);
+    this.board[0][4] = new Queen(true, 0, 4);
     whitePieces.add(this.board[0][4]);
+    this.board[0][3] = new King(true, 0, 3);
+    whitePieces.add(this.board[0][3]);
 
     this.board[7][0] = new Rook(false, 7, 0);
     blackPieces.add(this.board[7][0]);
@@ -169,10 +169,10 @@ public class ChessBoard implements Board {
     blackPieces.add(this.board[7][2]);
     this.board[7][5] = new Bishop(false, 7, 5);
     blackPieces.add(this.board[7][5]);
-    this.board[7][3] = new Queen(false, 7, 3);
-    blackPieces.add(this.board[7][3]);
-    this.board[7][4] = new King(false, 7, 4);
+    this.board[7][4] = new Queen(false, 7, 4);
     blackPieces.add(this.board[7][4]);
+    this.board[7][3] = new King(false, 7, 3);
+    blackPieces.add(this.board[7][3]);
     this.whiteToMove = true;
     this.gameStart = true;
   }
