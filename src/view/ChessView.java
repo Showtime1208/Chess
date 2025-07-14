@@ -4,25 +4,9 @@ import model.board.ChessBoard;
 import javax.swing.*;
 import java.awt.*;
 
-public class ChessView {
-  private ChessBoard board;
+public interface ChessView {
+  void setController(controller.Controller controller);
+  void update();
 
-  public ChessView(ChessBoard board) {
-    if (board == null) {
-      throw new IllegalArgumentException("Board cannot be null.");
-    }
-  }
-
-  public String displayBoard() {
-    return "";
-  }
-
-  public String displayWhiteGraveyard() {
-    return "";
-  }
-
-  public String displayBlackGraveyard() {
-    return "";
-  }
-
+  void highlightMoves(java.util.List<Point> moves);
 }

@@ -1,24 +1,26 @@
 package view;
 import controller.ChessController;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.*;
 import java.util.*;
+
+import controller.Controller;
 import model.board.ChessBoard;
 import model.piece.ChessPiece;
 
-public class ChessBoardFrame extends JFrame {
+public class ChessBoardFrame extends JFrame implements ChessView {
   private JPanel[][] panel;
   private ChessBoard model;
-  private ChessController controller;
+  private Controller controller;
 
 
-  public ChessBoardFrame(ChessBoard model, ChessController controller) {
+  public ChessBoardFrame(ChessBoard model) {
     this.model = model;
     this.panel = new JPanel[8][8];
-    this.controller = controller;
     setTitle("Chess Board");
     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     setSize(600, 600);
@@ -31,7 +33,7 @@ public class ChessBoardFrame extends JFrame {
         } else {
           square.setBackground(Color.GRAY);
         }
-        square.addMouseListener(new MouseClickListener(row, col, controller));
+        square.addMouseListener(new MouseClickListener(row, col));
         panel[row][col] = square;
         add(square);
       }
@@ -42,39 +44,44 @@ public class ChessBoardFrame extends JFrame {
 
   }
 
-  public void addController(ChessController controller) {
+  public void setController(Controller controller) {
     this.controller = controller;
   }
 
-  public void updateBoard() {
+  public void update() {
     for (int row = 0; row < 8; row++) {
       for (int col = 0; col < 8; col++) {
         JPanel square = panel[row][col];
+        square.removeAll(); // Clear old piece
+
         ChessPiece piece = model.get(row, col);
-        if (piece != null) {
+        if (piece != null && piece.getIcon() != null) {
           JLabel pieceLabel = new JLabel(piece.getIcon());
-          square.add(pieceLabel);
+          pieceLabel.setHorizontalAlignment(SwingConstants.CENTER);
+          square.add(pieceLabel, BorderLayout.CENTER);
         }
-        square.revalidate();
-        square.repaint();
       }
     }
+    revalidate();
+    repaint();
   }
 
   private class MouseClickListener extends MouseAdapter {
     private int row;
     private int col;
-    private ChessController controller;
 
-    public MouseClickListener(int row, int col, ChessController controller) {
+    public MouseClickListener(int row, int col) {
       this.row = row;
       this.col = col;
-      this.controller = controller;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
-      controller.handleSquareClick(row, col);
+      if (controller != null) {
+        controller.handleSquareClick(row, col);
+      } else {
+        throw new IllegalStateException();
+      }
     }
   }
 }

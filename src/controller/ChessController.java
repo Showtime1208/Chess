@@ -10,13 +10,13 @@ import model.piece.ChessPiece;
 import view.ChessBoardFrame;
 import view.ChessView;
 
-public class ChessController {
+public class ChessController implements Controller {
   private ChessBoard board;
-  private ChessBoardFrame view;
+  private ChessView view;
   private boolean pieceSelected;
   private int selectedRow;
   private int selectedCol;
-  public ChessController(ChessBoard board, ChessBoardFrame view) {
+  public ChessController(ChessBoard board, ChessView view) {
     if  (board == null ||  view == null) {
       throw new IllegalArgumentException("Board  or View is null");
     }
@@ -28,7 +28,7 @@ public class ChessController {
 
   public void playGame() {
     board.startGame();
-    view.updateBoard();
+    view.update();
 
   }
 
@@ -38,7 +38,7 @@ public class ChessController {
       try {
         piece = board.get(row, col);
       } catch (IllegalArgumentException | IllegalStateException e) {
-        throw new IllegalArgumentException("How");
+        throw new IllegalArgumentException("Invalid position");
       }
       if (piece == null) {
         return;
@@ -61,7 +61,7 @@ public class ChessController {
       pieceSelected = false;
       selectedRow = -1;
       selectedCol = -1;
-      view.updateBoard();
+      view.update();
     }
   }
 

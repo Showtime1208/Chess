@@ -9,12 +9,12 @@ public class Main {
 
   public static void main(String[] args) {
     ChessBoard board = new ChessBoard();
-    ChessBoardFrame frame = new ChessBoardFrame(board, null);
+    ChessBoardFrame frame = new ChessBoardFrame(board);
     ChessController controller = new  ChessController(board, frame);
-    frame.addController(controller);
-    board.startGame();
+    frame.setController(controller);
+    controller.playGame();
     SwingUtilities.invokeLater(() -> {
-      frame.updateBoard();
+      frame.update();
       frame.setVisible(true);
     });
 
