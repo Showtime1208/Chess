@@ -6,6 +6,8 @@ import java.util.List;
 import javax.swing.ImageIcon;
 
 import java.awt.*;
+
+import model.board.Board;
 import model.board.ChessBoard;
 
 public class Pawn implements ChessPiece {
@@ -32,6 +34,8 @@ public class Pawn implements ChessPiece {
   @Override
   public List<Point> getValidMoves(ChessBoard boardState) {
     List<Point> validMoves = new ArrayList<>();
+    int currentRow = row;
+    int currentCol = col;
     int direction = isWhite ? 1 : -1;
     int oneStepRow = row + direction;
     //forward motion
@@ -46,43 +50,17 @@ public class Pawn implements ChessPiece {
         validMoves.add(new Point(twoStepRow, col));
       }
     }
-    int leftDiagCol = col - 1;
-    int rightDiagCol = col + 1;
-    // leftDiag take
-    if (isInBounds(oneStepRow, leftDiagCol)) {
-      ChessPiece occupant = boardState.get(oneStepRow, leftDiagCol);
-      if (occupant != null && occupant.isWhite() != this.isWhite) {
-        validMoves.add(new Point(oneStepRow, leftDiagCol));
-      }
-    }
-    // rightDiag take
-    if (isInBounds(oneStepRow, rightDiagCol)) {
-      ChessPiece occupant = boardState.get(oneStepRow, rightDiagCol);
-      if (occupant != null && occupant.isWhite() != this.isWhite) {
-        validMoves.add(new Point(oneStepRow, rightDiagCol));
-      }
-    }
-    //This might work for en passant not sure you prolly gotta test it
-    if (isInBounds(row, leftDiagCol)) {
-      ChessPiece occupant = boardState.get(row, leftDiagCol);
-      if (occupant.getClass() == Pawn.class) {
-        Pawn pawn = (Pawn) occupant;
-        if (pawn.isWhite() != this.isWhite && pawn.isHasMovedOnce() == true) {
-          validMoves.add(new Point(row, leftDiagCol));
+    int[] colOffsets = {-1, 1}; // Left and right diagonals
+    for (int offset : colOffsets) {
+      int diagCol = currentCol + offset;
+      if (0 <= diagCol && diagCol < 8 && 0 <= oneStepRow && oneStepRow < 8) {
+        ChessPiece occupant = boardState.get(oneStepRow, diagCol);
+        if (occupant != null && occupant.isWhite() != this.isWhite()) {
+          validMoves.add(new Point(oneStepRow, diagCol));
         }
       }
     }
-    //checking en passsant to the right
-    if (isInBounds(row, rightDiagCol)) {
-      ChessPiece occupant = boardState.get(row, rightDiagCol);
-      if (occupant.getClass() == Pawn.class) {
-        Pawn pawn = (Pawn) occupant;
-        if (pawn.isWhite() != this.isWhite && pawn.isHasMovedOnce() == true) {
-          validMoves.add(new Point(row, rightDiagCol));
-        }
-      }
-    }
-    // You still need to figure out en passant
+
     return validMoves;
   }
 
