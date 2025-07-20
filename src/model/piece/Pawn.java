@@ -105,4 +105,8 @@ public class Pawn implements ChessPiece {
   public boolean isHasMovedOnce() {
     return hasMovedOnce;
   }
+
+  public void setHasMoved(boolean hasMoved) {
+    this.hasMoved = hasMoved;
+  }
 }

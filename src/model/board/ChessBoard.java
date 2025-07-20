@@ -124,6 +124,9 @@ public class ChessBoard implements Board {
     if (endPiece != null && endPiece.isWhite() == startPiece.isWhite()) {
       throw new IllegalStateException("Cannot move to a square with your own piece on it.");
     }
+    if (startPiece.getClass() == Pawn.class) {
+      ((Pawn) startPiece).setHasMoved(true);
+    }
     if (endPiece == null) {
       set(endRow, endCol, startPiece);
       removePiece(startRow, startCol);
