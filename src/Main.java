@@ -10,7 +10,7 @@ public class Main {
   public static void main(String[] args) {
     ChessBoard board = new ChessBoard();
     ChessBoardFrame frame = new ChessBoardFrame(board);
-    ChessController controller = new  ChessController(board, frame);
+    ChessController controller = new ChessController(board, frame);
     frame.setController(controller);
     controller.playGame();
     SwingUtilities.invokeLater(() -> {

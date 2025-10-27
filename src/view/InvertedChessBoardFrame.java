@@ -1,4 +1,5 @@
 package view;
+
 import controller.ChessController;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -12,7 +13,7 @@ import controller.Controller;
 import model.board.ChessBoard;
 import model.piece.ChessPiece;
 
-public class ChessBoardFrame extends JFrame implements ChessView {
+public class InvertedChessBoardFrame extends JFrame implements ChessView {
   private JPanel[][] panel;
   private ChessBoard model;
   private Controller controller;
@@ -21,7 +22,7 @@ public class ChessBoardFrame extends JFrame implements ChessView {
   private List<Point> highlightedMoves = new ArrayList<>();
 
 
-  public ChessBoardFrame(ChessBoard model) {
+  public InvertedChessBoardFrame(ChessBoard model) {
     this.model = model;
     this.panel = new JPanel[8][8];
     setTitle("Chess Board");
@@ -64,10 +65,14 @@ public class ChessBoardFrame extends JFrame implements ChessView {
         JPanel square = panel[row][col];
         square.removeAll(); // Clear old piece
 
+        // Invert the coordinates for black player view
+        int invertedRow = 7 - row;
+        int invertedCol = 7 - col;
+        
         // Set background color based on selection and highlights
-        if (row == selectedRow && col == selectedCol) {
+        if (invertedRow == selectedRow && invertedCol == selectedCol) {
           square.setBackground(Color.YELLOW); // Selected piece
-        } else if (highlightedMoves.contains(new Point(row, col))) {
+        } else if (highlightedMoves.contains(new Point(invertedRow, invertedCol))) {
           square.setBackground(Color.GREEN); // Valid move
         } else if ((row + col) % 2 == 0) {
           square.setBackground(Color.WHITE);
@@ -75,7 +80,7 @@ public class ChessBoardFrame extends JFrame implements ChessView {
           square.setBackground(Color.GRAY);
         }
 
-        ChessPiece piece = model.get(row, col);
+        ChessPiece piece = model.get(invertedRow, invertedCol);
         if (piece != null && piece.getIcon() != null) {
           JLabel pieceLabel = new JLabel(piece.getIcon());
           pieceLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -99,7 +104,10 @@ public class ChessBoardFrame extends JFrame implements ChessView {
     @Override
     public void mouseClicked(MouseEvent e) {
       if (controller != null) {
-        controller.handleSquareClick(row, col);
+        // Invert the coordinates for black player view
+        int invertedRow = 7 - row;
+        int invertedCol = 7 - col;
+        controller.handleSquareClick(invertedRow, invertedCol);
       } else {
         throw new IllegalStateException();
       }

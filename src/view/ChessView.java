@@ -7,6 +7,6 @@ import java.awt.*;
 public interface ChessView {
   void setController(controller.Controller controller);
   void update();
-
   void highlightMoves(java.util.List<Point> moves);
+  void setSelection(int row, int col);
 }
