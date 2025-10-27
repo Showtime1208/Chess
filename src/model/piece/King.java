@@ -91,6 +91,10 @@ public class King implements ChessPiece {
     }
   }
 
+  public void setHasMoved(boolean hasMoved) {
+    this.hasMoved = hasMoved;
+  }
+
   private boolean isInBounds(int row, int col) {
     return (row >= 0 && row <= 7) && (col >= 0 && col <= 7);
   }

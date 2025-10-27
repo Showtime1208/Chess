@@ -50,7 +50,7 @@ public class Queen implements ChessPiece {
 
   @Override
   public boolean isWhite() {
-    return false;
+    return isWhite;
   }
 
   @Override
@@ -66,63 +66,63 @@ public class Queen implements ChessPiece {
   private List<Point> getValidBishopMoves(Board boardState) {
       List<Point> validMoves = new ArrayList<>();
       //down and right
-      for (int newRow = row + 1; newRow < 8; newRow++) {
-          for (int newCol = col + 1; newCol < 8; newCol++) {
-              if (!isInBounds(newRow, newCol)) break;
-              ChessPiece occupant = boardState.get(newRow, newCol);
-              if (occupant == null) {
+      for (int i = 1; i < 8; i++) {
+          int newRow = row + i;
+          int newCol = col + i;
+          if (!isInBounds(newRow, newCol)) break;
+          ChessPiece occupant = boardState.get(newRow, newCol);
+          if (occupant == null) {
+              validMoves.add(new Point(newRow, newCol));
+          } else {
+              if (occupant.isWhite() != this.isWhite) {
                   validMoves.add(new Point(newRow, newCol));
-              } else {
-                  if (occupant.isWhite() != this.isWhite) {
-                      validMoves.add(new Point(newRow, newCol));
-                  }
-                  break;
               }
+              break;
           }
       }
       //up and right
-      for (int newRow = row - 1; newRow >= 0; newRow--) {
-          for (int newCol = col + 1; newCol < 9; newCol++) {
-              if (!isInBounds(newRow, newCol)) break;
-              ChessPiece occupant = boardState.get(newRow, newCol);
-              if (occupant == null) {
+      for (int i = 1; i < 8; i++) {
+          int newRow = row - i;
+          int newCol = col + i;
+          if (!isInBounds(newRow, newCol)) break;
+          ChessPiece occupant = boardState.get(newRow, newCol);
+          if (occupant == null) {
+              validMoves.add(new Point(newRow, newCol));
+          } else {
+              if (occupant.isWhite() != this.isWhite) {
                   validMoves.add(new Point(newRow, newCol));
-              } else {
-                  if (occupant.isWhite() != this.isWhite) {
-                      validMoves.add(new Point(newRow, newCol));
-                  }
-                  break;
               }
+              break;
           }
       }
       //down and left
-      for (int newRow = row + 1; newRow < 8; newRow++) {
-          for (int newCol = col - 1; newCol >= 0; newCol--) {
-              if (!isInBounds(newRow, newCol)) break;
-              ChessPiece occupant = boardState.get(newRow, newCol);
-              if (occupant == null) {
+      for (int i = 1; i < 8; i++) {
+          int newRow = row + i;
+          int newCol = col - i;
+          if (!isInBounds(newRow, newCol)) break;
+          ChessPiece occupant = boardState.get(newRow, newCol);
+          if (occupant == null) {
+              validMoves.add(new Point(newRow, newCol));
+          } else {
+              if (occupant.isWhite() != this.isWhite) {
                   validMoves.add(new Point(newRow, newCol));
-              } else {
-                  if (occupant.isWhite() != this.isWhite) {
-                      validMoves.add(new Point(newRow, newCol));
-                  }
-                  break;
               }
+              break;
           }
       }
-      //down and right
-      for (int newRow = row - 1; newRow >= 0; newRow--) {
-          for (int newCol = col - 1; newCol >= 0; newCol--) {
-              if (!isInBounds(newRow, newCol)) break;
-              ChessPiece occupant = boardState.get(newRow, newCol);
-              if (occupant == null) {
+      //up and left
+      for (int i = 1; i < 8; i++) {
+          int newRow = row - i;
+          int newCol = col - i;
+          if (!isInBounds(newRow, newCol)) break;
+          ChessPiece occupant = boardState.get(newRow, newCol);
+          if (occupant == null) {
+              validMoves.add(new Point(newRow, newCol));
+          } else {
+              if (occupant.isWhite() != this.isWhite) {
                   validMoves.add(new Point(newRow, newCol));
-              } else {
-                  if (occupant.isWhite() != this.isWhite) {
-                      validMoves.add(new Point(newRow, newCol));
-                  }
-                  break;
               }
+              break;
           }
       }
       return validMoves;

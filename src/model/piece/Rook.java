@@ -110,6 +110,10 @@ public class Rook implements ChessPiece {
     return hasMoved;
   }
 
+  public void setHasMoved(boolean hasMoved) {
+    this.hasMoved = hasMoved;
+  }
+
   @Override
   public Point getPosition() {
     return new Point(this.row, this.col);

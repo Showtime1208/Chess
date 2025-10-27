@@ -9,8 +9,6 @@ import model.piece.ChessPiece;
 import model.piece.King;
 import model.piece.Knight;
 import model.piece.Pawn;
-
-
 import model.piece.Queen;
 import model.piece.Rook;
 
@@ -127,12 +125,18 @@ public class ChessBoard implements Board {
     if (startPiece.getClass() == Pawn.class) {
       ((Pawn) startPiece).setHasMoved(true);
     }
-    if (endPiece == null) {
-      set(endRow, endCol, startPiece);
-      removePiece(startRow, startCol);
+    if (startPiece.getClass() == King.class) {
+      ((King) startPiece).setHasMoved(true);
     }
-    removePiece(endRow, endCol);
+    if (startPiece.getClass() == Rook.class) {
+      ((Rook) startPiece).setHasMoved(true);
+    }
+    if (endPiece != null) {
+      removePiece(endRow, endCol);
+    }
     set(endRow, endCol, startPiece);
+    startPiece.setPosition(endRow, endCol);
+    removePiece(startRow, startCol);
     this.whiteToMove = !whiteToMove;
   }
 
@@ -251,9 +255,15 @@ public class ChessBoard implements Board {
   }
 
   private Point findKing(boolean isWhite) {
-    if (isWhite) {
-      return whitePieces.get(whitePieces.size()-1).getPosition();
-    } else return blackPieces.get(blackPieces.size()-1).getPosition();
+    for (int row = 0; row < 8; row++) {
+      for (int col = 0; col < 8; col++) {
+        ChessPiece piece = get(row, col);
+        if (piece instanceof King && piece.isWhite() == isWhite) {
+          return new Point(row, col);
+        }
+      }
+    }
+    return null;
   }
 
   private void pawnPromotion(Pawn pawn, int endRow) {
@@ -267,6 +277,8 @@ public class ChessBoard implements Board {
       throw new IllegalStateException("Game has not started.");
     }
     ChessBoard copy = new ChessBoard();
+    copy.gameStart = true;
+    copy.whiteToMove = this.whiteToMove;
     for (int row = 0; row < 8; row++) {
       for (int col = 0; col < 8; col++) {
         ChessPiece original = this.get(row, col);
