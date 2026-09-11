@@ -29,8 +29,7 @@ public class Rook implements ChessPiece {
   @Override
   public ImageIcon getIcon() {
     String string = isWhite ? "white" : "black";
-    return new ImageIcon("pieceImages" + File.separator
-        + string + "Rook.png");
+    return PieceIcons.get(string + "Rook");
 
   }
 

@@ -43,8 +43,7 @@ public class Queen implements ChessPiece {
   @Override
   public ImageIcon getIcon() {
     String string = isWhite ? "white" : "black";
-    return new ImageIcon("pieceImages" + File.separator
-        + string + "Queen.png");
+    return PieceIcons.get(string + "Queen");
 
   }
 

@@ -1,12 +1,13 @@
 package view;
 
-import model.board.ChessBoard;
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Point;
+import java.util.List;
 
 public interface ChessView {
   void setController(controller.Controller controller);
   void update();
-  void highlightMoves(java.util.List<Point> moves);
+  void highlightMoves(List<Point> moves);
   void setSelection(int row, int col);
+  default char choosePromotion(boolean white) { return 'Q'; }
+  default void showMessage(String message) { }
 }
