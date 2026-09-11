@@ -24,8 +24,7 @@ public class King implements ChessPiece {
   @Override
   public ImageIcon getIcon() {
     String string = isWhite ? "white" : "black";
-    return new ImageIcon("pieceImages" + File.separator
-        + string + "King.png");
+    return PieceIcons.get(string + "King");
 
   }
 
@@ -52,43 +51,9 @@ public class King implements ChessPiece {
   }
 
   private void addCastlingMoves(ChessBoard boardState, List<Point> validMoves) {
-    if (!this.hasMoved) {
-      // === KING-SIDE ===
-      ChessPiece rightRook = boardState.get(row, 7);
-      if (rightRook instanceof Rook) {
-        Rook rook = (Rook) rightRook;
-        if (rook.isWhite() == this.isWhite && !rook.isHasMoved()) {
-          if (boardState.get(row, 5) == null && boardState.get(row, 6) == null) {
-            boolean kingSquareSafe  = !boardState.isUnderAttack(this.isWhite, new Point(row, col));
-            boolean passSquare5Safe = !boardState.isUnderAttack(this.isWhite, new Point(row, 5));
-            boolean passSquare6Safe = !boardState.isUnderAttack(this.isWhite, new Point(row, 6));
-            if (kingSquareSafe && passSquare5Safe && passSquare6Safe) {
-              validMoves.add(new Point(row, col + 2));
-            }
-          }
-        }
-      }
-
-      // === QUEEN-SIDE ===
-      ChessPiece leftRook = boardState.get(row, 0);
-      if (leftRook instanceof Rook) {
-        Rook rook = (Rook) leftRook;
-        if (rook.isWhite() == this.isWhite && !rook.isHasMoved()) {
-          if (boardState.get(row, 1) == null
-              && boardState.get(row, 2) == null
-              && boardState.get(row, 3) == null) {
-
-            boolean kingSquareSafe  = !boardState.isUnderAttack(this.isWhite, new Point(row, col));
-            boolean passSquare1Safe = !boardState.isUnderAttack(this.isWhite, new Point(row, 1));
-            boolean passSquare2Safe = !boardState.isUnderAttack(this.isWhite, new Point(row, 2));
-            boolean passSquare3Safe = !boardState.isUnderAttack(this.isWhite, new Point(row, 3));
-            if (kingSquareSafe && passSquare1Safe && passSquare2Safe && passSquare3Safe) {
-              validMoves.add(new Point(row, col - 2));
-            }
-          }
-        }
-      }
-    }
+    if (row != (isWhite ? 0 : 7) || col != 4 || hasMoved) return;
+    if (boardState.canCastle(isWhite, true)) validMoves.add(new Point(row, 6));
+    if (boardState.canCastle(isWhite, false)) validMoves.add(new Point(row, 2));
   }
 
   public void setHasMoved(boolean hasMoved) {

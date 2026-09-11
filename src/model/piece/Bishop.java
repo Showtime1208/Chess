@@ -23,8 +23,7 @@ public class Bishop implements ChessPiece {
   @Override
   public ImageIcon getIcon() {
     String string = isWhite ? "white" : "black";
-    return new ImageIcon("pieceImages" + File.separator
-        + string + "Bishop.png");
+    return PieceIcons.get(string + "Bishop");
 
   }
 

@@ -16,7 +16,6 @@ public class Pawn implements ChessPiece {
   private int row;
   private int col;
   private boolean hasMoved;
-  private boolean hasMovedOnce;
 
   public Pawn(boolean isWhite, int row, int col) {
     this.isWhite = isWhite;
@@ -34,7 +33,6 @@ public class Pawn implements ChessPiece {
   @Override
   public List<Point> getValidMoves(ChessBoard boardState) {
     List<Point> validMoves = new ArrayList<>();
-    int currentRow = row;
     int currentCol = col;
     int direction = isWhite ? 1 : -1;
     int oneStepRow = row + direction;
@@ -46,7 +44,8 @@ public class Pawn implements ChessPiece {
       }
       //seeing if it can move two steps
       int twoStepRow = row + (2 * direction);
-      if (isInBounds(twoStepRow, col) && !hasMoved && boardState.get(twoStepRow, col) == null) {
+      if (row == (isWhite ? 1 : 6) && !hasMoved
+          && boardState.get(oneStepRow, col) == null && boardState.get(twoStepRow, col) == null) {
         validMoves.add(new Point(twoStepRow, col));
       }
     }
@@ -55,7 +54,11 @@ public class Pawn implements ChessPiece {
       int diagCol = currentCol + offset;
       if (0 <= diagCol && diagCol < 8 && 0 <= oneStepRow && oneStepRow < 8) {
         ChessPiece occupant = boardState.get(oneStepRow, diagCol);
-        if (occupant != null && occupant.isWhite() != this.isWhite()) {
+        Point ep = boardState.getEnPassantTarget();
+        ChessPiece adjacent = boardState.get(row, diagCol);
+        boolean enPassant = occupant == null && new Point(oneStepRow, diagCol).equals(ep)
+            && adjacent instanceof Pawn && adjacent.isWhite() != isWhite;
+        if ((occupant != null && occupant.isWhite() != this.isWhite()) || enPassant) {
           validMoves.add(new Point(oneStepRow, diagCol));
         }
       }
@@ -87,23 +90,17 @@ public class Pawn implements ChessPiece {
   public ChessPiece clone() {
     Pawn pawn = new Pawn(isWhite, row, col);
     pawn.hasMoved = this.hasMoved;
-    pawn.hasMovedOnce = this.hasMovedOnce;
     return pawn;
   }
 
   @Override
   public ImageIcon getIcon() {
     String string = isWhite ? "white" : "black";
-    return new ImageIcon("pieceImages" + File.separator
-        + string + "Pawn.png");
+    return PieceIcons.get(string + "Pawn");
   }
 
   public boolean isHasMoved() {
     return hasMoved;
-  }
-
-  public boolean isHasMovedOnce() {
-    return hasMovedOnce;
   }
 
   public void setHasMoved(boolean hasMoved) {

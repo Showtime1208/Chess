@@ -17,8 +17,7 @@ public class Knight implements ChessPiece {
   @Override
   public ImageIcon getIcon() {
     String string = isWhite ? "white" : "black";
-    return new ImageIcon("pieceImages" + File.separator
-        + string + "Knight.png");
+    return PieceIcons.get(string + "Knight");
   }
 
   @Override
